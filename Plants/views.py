@@ -8,6 +8,9 @@ def contact(request):
 	return render(request,'contact.html')
 def about(request):
 	return render(request,'about.html')
+def plants(request):
+	all_plants=plant.objects.all()
+	return render(request,'plants.html',{'all_plants':all_plants})
 def retrieve(request):
 	WaterLevel=request.GET['WaterLevel']
 	plantID=request.GET['plantID']
