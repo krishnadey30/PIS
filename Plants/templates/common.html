@@ -66,7 +66,7 @@
 
             
                               <header><br><br>
-                  <h1 class="page-title screen-reader-text">PLANTS</h1>
+                  <h1 class="page-title screen-reader-text"><strong>{{obj.plant_name}}</strong></h1>
                 </header>
               
           </div>
@@ -75,22 +75,27 @@
     </div>
   </div>
 </header><!-- /.container -->
-<main>
-  <div class="container">
-    <h1 style="text-align: center;">PLANT NAME</h1>
-    <div class="row">
-      <div class="col-md-12">
-        <article class="second-content">
-            {% for plant in all_plants %}
-            <a href="{{plant.id}}/"><h2 style="text-align: center;">{{plant.id}}.&nbsp;{{plant.plant_name}}</h2></a>
-            {% endfor %}
-      </article>
-    </div>
-  </div>
-</div>
-</main>
+ 
 
-</article></div></div></div></main>
+      <article class="hp-contact">
+        <div class="container">
+         
+          <h2>Sensor Values:</h2>
+          <div id="mc_embed_signup_scroll">
+          <ul>
+            <li><h3>ID: {{obj.id}} </h3></li>
+            <li><h3>Humidity: {{obj.humidity}} </h3></li>
+            <li><h3>Temperature: {{obj.temp}} </h3></li>
+            <li><h3>Soil-Moisture: {{obj.moisture}} </h3></li>
+            <li><h3>Rainfall: {{obj.rainfall}} </h3></li>
+            <li><h3>Water-level: {{obj.water_level}} </h3></li>
+          </ul>
+          </div>    
+        </div>
+      </article><!-- /.hp-contact -->
+
+
+    </main><!-- /main -->
 
     <footer role="global-footer">
       <div class="container">

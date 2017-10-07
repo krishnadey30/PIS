@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^contact/$',views.contact,name="contact"),
     url(r'^about/$',views.about,name="about"),
     url(r'^plants/$',views.plants,name="plants"),
+    url(r'^plants/(?P<plant_id>[0-9]+)/$',views.common,name="common"),
 ]

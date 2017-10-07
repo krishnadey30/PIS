@@ -11,6 +11,9 @@ def about(request):
 def plants(request):
 	all_plants=plant.objects.all()
 	return render(request,'plants.html',{'all_plants':all_plants})
+def common(request,plant_id):
+	obj=plant.objects.get(id=plant_id)
+	return render(request,'common.html',{'obj':obj})
 def retrieve(request):
 	WaterLevel=request.GET['WaterLevel']
 	plantID=request.GET['plantID']
