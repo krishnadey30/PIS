@@ -6,6 +6,6 @@ try{Typekit.load({ async: true });}catch(e){}
 $(document).ready(function() {
 	//var template_url="<?php echo bloginfo('template_url'); ?>";
 
-	$('.cta').append('<img src="/static/Plants/images/icon-white-arw.png" />');
+	$('.cta').append('<img src="/static/Plants/icon-white-arw.png" />');
 
 })

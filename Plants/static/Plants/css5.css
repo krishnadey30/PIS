@@ -143,7 +143,7 @@ blockquote.aligncenter {
 /* Navigation //////////////////////////////////////////// */
 
 .navbar-inverse {
-	background:url("images/transblue.png") 0 0 repeat;
+	background:url("transblue.png") 0 0 repeat;
 	box-sizing:border-box;
 	border:none;
 	font-size:1.1em;
@@ -210,14 +210,14 @@ blockquote.aligncenter {
 /* Hero Area */
 
 .hp-hero-wrap {
-	background:url("images/tree.jpg") 50% 50% no-repeat;
+	background:url("tree.jpg") 50% 50% no-repeat;
 	background-size:cover;
 	height: 670px;
 	position:relative;
 }
 
 .hp-hero-content {
-	background:url("images/bg-trans-blue.png") 0 0 repeat;
+	background:url("bg-trans-blue.png") 0 0 repeat;
 	border-top-right-radius: 25px;
 	margin-top:210px;
 	padding: 50px 55px 50px 0;
@@ -263,14 +263,14 @@ blockquote.aligncenter {
 /* Product Area */
 
 .hp-product-wrap {
-	background:url("images/BAARE.png") 0 0 repeat;
+	background:url("BAARE.png") 0 0 repeat;
 	position:relative;
 	/* height: 5px; */
 	/* padding-bottom: 100%; */
 }
 
 .hp-product-wrap [role=green-bg] {
-	background: url("images/trans-green.png") 0 0 repeat;
+	background: url("trans-green.png") 0 0 repeat;
 	height: 370px;
 	left:0;
 	position:absolute;
@@ -330,14 +330,14 @@ blockquote.aligncenter {
 }*/
 
 .hp-slideshow-wrap {
-	background:url("images/trans-green.png") 0 0 repeat;
+	background:url("trans-green.png") 0 0 repeat;
 	/* background-clip: content-box; */
 	/* padding-top: 0px; */
 	/* margin-bottom: 5px; */
 }
 
 .hp-slideshow-wrap .row {
-	background:url("images/macbook.png") 0 0 no-repeat;
+	background:url("macbook.png") 0 0 no-repeat;
 	height:425px;
 	margin-top: -20px;
 	margin-bottom: -30px;
@@ -402,7 +402,7 @@ blockquote.aligncenter {
 /* Contact */
 
 .hp-contact {
-	background:url("images/xborder-vertical-dashed.png") 48% 0 repeat-y;
+	background:url("xborder-vertical-dashed.png") 48% 0 repeat-y;
 	/* padding: 0 5%; */
 	padding: 75px 0 100px;
 }
@@ -413,13 +413,13 @@ blockquote.aligncenter {
 }
 
 .hp-contact [role=subscribe] {
-	background-image:url("images/email.png");
+	background-image:url("email.png");
 	background-repeat:no-repeat;
 	padding-right:0;
 }
 
 .hp-contact [role=follow] {
-	background-image:url("images/twitter.png");
+	background-image:url("twitter.png");
 	background-repeat:no-repeat;
 }
 
