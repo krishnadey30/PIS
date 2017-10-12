@@ -108,7 +108,7 @@ Last Edited XX.XX.20XX | Erin Woo
 	}
 
 	.navbar-inverse .navbar-collapse {
-		background:url('transblue.png') 0 0 repeat;
+		background:url('images/transblue.png') 0 0 repeat;
 		border-top: 1px solid#ccc;
 		margin-top:23px;
 	}
@@ -124,7 +124,7 @@ Last Edited XX.XX.20XX | Erin Woo
 	}
 
 	.hp-hero-content {
-		background:url('bg-trans-blue.png') 0 0 repeat;
+		background:url('images/bg-trans-blue.png') 0 0 repeat;
 		border-top-right-radius: 0;
 		margin-top:105px;
 		padding: 75px 3%;
