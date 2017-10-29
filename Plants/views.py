@@ -1,6 +1,6 @@
 from django.shortcuts import redirect,render,get_object_or_404
 from django.http import HttpResponse
-from . models import plant,soil
+from . models import plant,soil_data,ws,ws_data,tank_data,tank
 
 def index(request):
  	return  render(request, 'index.html')
@@ -45,4 +45,3 @@ def retrieve(request):
 	s=soil(plant_key=o,moisture=soilMoisture,temp=temperature,humidity=humidity,rainfall=rainChances,water_level=WaterLevel)
 	s.save()
 	return HttpResponse("sensor_values")
-
