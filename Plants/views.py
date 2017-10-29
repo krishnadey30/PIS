@@ -12,10 +12,18 @@ def plants(request):
 	all_plants=plant.objects.all()
 	return render(request,'plants.html',{'all_plants':all_plants})
 def common(request,plant_id,index):
-	x=plant.objects.get(id=plant_id)
-	obj=soil.objects.filter(plant_key=x)
-	temp=[]
 	index=int(index)
+	x=plant.objects.get(id=plant_id)
+	r=x.tank_key
+	w=x.ws_key
+	WSD=ws_data.objects.filter(ws_key=w)
+	SD=soil_data.objects.filter(plant_key=x)
+	TD=tank_data.objects.filter(tank_key=r)
+	if(index<=3):
+		obj=WSD
+	elif(index==4):
+		obj=SD
+	temp=[]
 	val=""
 	for x in obj:
 		y=[]
@@ -33,7 +41,7 @@ def common(request,plant_id,index):
 			val="Moisture"
 			y.append(x.moisture)
 		temp.append(y)
-	return render(request,'common.html',{'temp':temp,'obj':obj,'name':val})
+	return render(request,'common.html',{'temp':temp,'tank':TD,'soil':SD,'weather':WSD,'name':val})
 def retrieve(request):
 	WaterLevel=request.GET['WaterLevel']
 	plantID=request.GET['plantID']
@@ -42,6 +50,12 @@ def retrieve(request):
 	temperature=request.GET['temperature']
 	rainChances=request.GET['rainChances']
 	o=get_object_or_404(plant,id=plantID)
-	s=soil(plant_key=o,moisture=soilMoisture,temp=temperature,humidity=humidity,rainfall=rainChances,water_level=WaterLevel)
+	r=o.tank_key
+	w=o.ws_key
+	s=soil_data(plant_key=o,moisture=soilMoisture)
 	s.save()
+	t=tank_data(tank_key=r,water_level=WaterLevel)
+	t.save()
+	W=ws_data(ws_key=w,temp=temperature,humidity=humidity,rainfall=rainChances)
+	W.save()
 	return HttpResponse("sensor_values")
