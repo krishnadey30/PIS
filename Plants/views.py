@@ -8,9 +8,20 @@ def contact(request):
 	return render(request,'contact.html')
 def about(request):
 	return render(request,'about.html')
+
 def plants(request):
-	all_plants=plant.objects.all()
-	return render(request,'plants.html',{'all_plants':all_plants})
+	all_plants = plant.objects.all()
+	final=[]
+	for plants in all_plants:
+		temp=[]
+		temp.append(int(plants.id))
+		temp.append(str(plants.plant_name))
+		r=plants.tank_key
+		SD=soil_data.objects.filter(plant_key=plants)
+		x=SD[len(SD)-1].moisture
+		temp.append(int(x))
+		final.append(temp)
+	return render(request,'plants.html',{'all_plants':final})
 def common(request,plant_id,index):
 	index=int(index)
 	x=plant.objects.get(id=plant_id)

@@ -85,10 +85,13 @@
               <h1 style="text-align: center; color: Green;">PLANTS:</h1>
               <div id="mc_embed_signup_scroll">
                 {% for plant in all_plants %}
-            <a href="{{plant.id}}/1"><h3 style="text-align: center;">{{plant.id}}.&nbsp;{{plant.plant_name}}</h3></a>
-            
+           <a href="{{plant.0 }}/1"><h3 style="text-align: center;">{{plant.0}}.&nbsp;{{plant.1}}</h3></a>
+            {% if plant.2 < 20 and plant.2 > 0 %}
+                    <h3 style="text-align: center;">critical situation.</h3>
+            {% elif plant.2 == 0 %}
+              <h3 style="text-align: center;">Will die soon</h3>
+            {% endif %}
             {% endfor %}
-              </div> 
             </div>
             <div class="col-sm-6" >
               
