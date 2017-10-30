@@ -12,8 +12,13 @@ def about(request):
 def plants(request):
 	all_plants = plant.objects.all()
 	final=[]
+	maps=[]
 	for plants in all_plants:
 		temp=[]
+		m=[]
+		m.append(plants.latitude)
+		m.append(plants.longitude)
+		m.append(str(plants.plant_name))
 		temp.append(int(plants.id))
 		temp.append(str(plants.plant_name))
 		r=plants.tank_key
@@ -21,7 +26,8 @@ def plants(request):
 		x=SD[len(SD)-1].moisture
 		temp.append(int(x))
 		final.append(temp)
-	return render(request,'plants.html',{'all_plants':final})
+		maps.append(m)
+	return render(request,'plants.html',{'all_plants':final,'maps':maps})
 	
 def common(request,plant_id,index):
 	index=int(index)
