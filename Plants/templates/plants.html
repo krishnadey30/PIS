@@ -4,8 +4,55 @@
   <head>
     <title>I-F</title>
     <title>Plants &raquo; IndianaFarms</title>
-   
 
+<style>
+#id1{
+     background-image: url("{% static 'Plants/images/tree4.jpg' %}");
+     background-repeat: no-repeat;
+} 
+.button {
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button1 {
+    background-color: white;
+    color: black; 
+    border: 2px solid #4CAF50;
+}
+
+.button2 {
+    background-color: white;
+    color: black; 
+    border: 2px solid #008CBA;
+}
+
+.button3 {
+    background-color: white;
+    color: black; 
+    border: 2px solid #f44336;
+}
+.button1:hover {
+    background-color: #4CAF50;
+}
+.button2:hover{
+    background-color:  #008CBA;
+   }
+.button3:hover {
+    background-color: #f44336;
+}
+}
+</style>
     <script type="text/javascript">window._wpemojiSettings={"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.farmx.co\/wp-includes\/js\/wp-emoji-release.min.js"}};!function(a,b,c){function d(a){var c,d,e,f=b.createElement("canvas"),g=f.getContext&&f.getContext("2d"),h=String.fromCharCode;return g&&g.fillText?(g.textBaseline="top",g.font="600 32px Arial","flag"===a?(g.fillText(h(55356,56806,55356,56826),0,0),f.toDataURL().length>3e3):"diversity"===a?(g.fillText(h(55356,57221),0,0),c=g.getImageData(16,16,1,1).data,g.fillText(h(55356,57221,55356,57343),0,0),c=g.getImageData(16,16,1,1).data,e=c[0]+","+c[1]+","+c[2]+","+c[3],d!==e):("simple"===a?g.fillText(h(55357,56835),0,0):g.fillText(h(55356,57135),0,0),0!==g.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8"),diversity:d("diversity")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8&&c.supports.diversity||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);</script>
     <style type="text/css">img.wp-smiley,img.emoji{display:inline!important;border:none!important;box-shadow:none!important;height:1em!important;width:1em!important;margin:0 .07em!important;vertical-align:-.1em!important;background:none!important;padding:0!important}</style>
 <style id='ie10-viewport-css' media='all'>@-webkit-viewport { width: device-width; }@-moz-viewport    { width: device-width; }@-ms-viewport     { width: device-width; }@-o-viewport      { width: device-width; }@viewport         { width: device-width; }</style>
@@ -54,19 +101,14 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-
     <div class="clear"></div>
-
-
-<header class="hero-wrap second-hero-wrap other-heroes blog-hero">
+<header class="hero-wrap second-hero-wrap other-heroes blog-hero" >
 
   <div class="hero second-hero">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <div class="second-hero-content">
-
-            
                               <header><br><br>
                   <h1 class="page-title screen-reader-text">PLANTS</h1>
                 </header>
@@ -77,27 +119,31 @@
     </div>
   </div>
 </header><!-- /.container -->
-<main>
+<main  >
    <article class="hp-contact">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6" >
+        <div class="container" >
+          <div class="row" >
+            <div class="col-sm-6">
               <h1 style="text-align: center; color: Green;">PLANTS:</h1>
-              <div id="mc_embed_signup_scroll">
+              <div id="mc_embed_signup_scroll" id="id3">
                 {% for plant in all_plants %}
-           <a href="{{plant.0 }}/1"><h3 style="text-align: center;">{{plant.0}}.&nbsp;{{plant.1}}</h3></a>
-            {% if plant.2 < 20 and plant.2 > 0 %}
-                    <h3 style="text-align: center;">critical situation.</h3>
-            {% elif plant.2 == 0 %}
-              <h3 style="text-align: center;">Will die soon</h3>
-            {% endif %}
-            {% endfor %}
-            </div>
+                <a href="{{plant.0 }}/1"><h3 style="text-align: center;">{{plant.0}}.&nbsp;{{plant.1}}</h3></a>
+                {% endfor %}
+              </div>
             <div class="col-sm-6" >
-              
+          </div>      
+          </div>
+          <h1 style="text-align: center; color: Green;">States of plants:</h1>
+          {% for plant in all_plants %}
+              {% if plant.2 < 20 and plant.2 > 0 %}
+              <center><button class="button button2">{{plant.1}} is in Critical situation.</button></center>
+              {% elif plant.2 == 0 %}
+                <center> <button class="button button3">{{plant.1}} Will die soon.</button></center>
+              {% else%}
+                <center> <button class="button button1">{{plant.1}} is Healthy plant</button></center>
+            {% endif %}
+          {% endfor %}
 
-          </div>
-          </div>
         </div>
       </article>
 
