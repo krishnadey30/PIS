@@ -22,6 +22,7 @@ def plants(request):
 		temp.append(int(x))
 		final.append(temp)
 	return render(request,'plants.html',{'all_plants':final})
+	
 def common(request,plant_id,index):
 	index=int(index)
 	x=plant.objects.get(id=plant_id)
