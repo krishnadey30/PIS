@@ -1,0 +1,19 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<body>
+ <h1> Profile <h1> <br/>
+    <h2>{{ user.username }}</h2>
+    <p>Email: {{ user.email }}</p>
+    {% if userprofile %}
+        <p>Phone:{{ userprofile.Phone_no }}</a></p>
+        <br/>
+        <!--{% if userprofile.picture %}-->
+            <img src="{{ user.userprofile.picture.url }}"  />
+       <!-- {% endif %}-->
+    {% endif %}
+</h1>
+</h1>
+</body>
+</html>

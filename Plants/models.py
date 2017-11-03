@@ -1,8 +1,34 @@
 from django.db import models
 from django.utils import timezone
 from datetime import datetime 
+from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
+from PIL import Image as Img
+import StringIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
+class UserProfile(models.Model):
+    # This line is required. Links UserProfile to a User model instance.
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    # The additional attributes we wish to include.
+    Phone_no = models.IntegerField(default=0, blank=True)
+    picture = models.ImageField(upload_to='profile_images', blank=True)
+    def save(self, *args, **kwargs):
+        if self.picture:
+            image = Img.open(StringIO.StringIO(self.picture.read()))
+            image.thumbnail((200,200), Img.ANTIALIAS)
+            output = StringIO.StringIO()
+            image.save(output, format='JPEG', quality=75)
+            output.seek(0)
+            self.picture= InMemoryUploadedFile(output,'ImageField', "cropped_%s" %self.picture.name, 'image/jpeg', output.len, None)
+        super(UserProfile, self).save(*args, **kwargs)
+    # Override the __unicode__() method to return out something meaningful!
+    def __unicode__(self):
+        return self.user.username
 
 class tank(models.Model):
+	user_key=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
 	longitude=models.FloatField(default=0)
 	latitude=models.FloatField(default=0)
 	tank_volume=models.FloatField(default=0)
@@ -15,6 +41,7 @@ class tank_data(models.Model):
 		return str(self.water_level)
 
 class ws(models.Model):
+	user_key=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
 	longitude=models.FloatField(default=0)
 	latitude=models.FloatField(default=0)
 	location_name=models.CharField(max_length=300)
@@ -29,6 +56,7 @@ class ws_data(models.Model):
 		return str(self.temp)
 
 class plant(models.Model):
+	user_key=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
 	ws_key=models.ForeignKey(ws,on_delete=models.CASCADE)
 	tank_key=models.ForeignKey(tank,on_delete=models.CASCADE)
 	plant_name=models.CharField(max_length=200)

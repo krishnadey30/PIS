@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Login</title>
+<!-- Meta tag Keywords -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Glassy Login Form Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Meta tag Keywords -->
+<!-- css files -->
+<link rel="stylesheet" href={% static 'Plants/css/font-awesome.css' %}> <!-- Font-Awesome-Icons-CSS -->
+<link rel="stylesheet" href={% static 'Plants/css/style.css' %} type="text/css" media="all" /> <!-- Style-CSS --> 
+<!-- //css files -->
+<!-- web-fonts -->
+<link href={% static 'Plants/css/css1.css' %} rel="stylesheet">
+<link href={% static 'Plants/css/css2.css' %} rel="stylesheet">
+<!-- //web-fonts -->
+</head>
+<body>
+		<!--header-->
+		<div class="header-w3l">
+			<h1>INDIAna Farms</h1>
+		</div>
+		<!--//header-->
+		<!--main-->
+		<div class="main-w3layouts-agileinfo">
+	           <!--form-stars-here-->
+						<div class="wthree-form">
+							<h2>Enter details to Register</h2>
+							<form action="/register/" method="post" enctype="multipart/form-data">
+								{% csrf_token %}
+
+								{% for field in user_form.visible_fields %}
+					            {{ field.errors }}
+					            {{ field.help_text }}<br />
+					            <div class="form-sub-w3">
+					            {{ field }}<div class="icon-w3">
+									<i class="fa fa-user" aria-hidden="true"></i></div></div><br />
+					            {% endfor %}
+
+					            {% for field in profile_form.visible_fields %}
+					            {{ field.errors }}
+					            {{ field.help_text }}<br />
+					             <div class="form-sub-w3">
+					            {{ field }}<div class="icon-w3">
+									<i class="fa fa-user" aria-hidden="true"></i></div></div><br />
+					            {% endfor %}
+								<div class="clear"></div>
+								<div class="submit-agileits">
+									<input type="submit" name="submit" value="Register">
+								</div> 
+								
+							</form>
+							<form action="/login/">
+							<div class="clear"></div>
+								<div class="submit-agileits">
+									<input type="submit" value="Login">
+								</div>
+							</form>
+						</div>
+				<!--//form-ends-here-->
+
+		</div>
+		<!--//main-->
+		<!--footer-->
+		<div class="footer">
+			<p>&copy; UG-2 ITWS-3 All rights reserved | Design by <a href="#">Group-2</a></p>
+		</div>
+		<!--//footer-->
+</body>
+</html>
