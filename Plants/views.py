@@ -175,21 +175,23 @@ def common(request,plant_id,index):
 	val=""
 	for x in obj:
 		y=[]
-		y.append(str(x.time))
-		if(index==1):
-			val="Temp"
-			y.append(x.temp)
-		elif(index==2):
-			val="Humidity"
-			y.append(x.humidity)
-		elif(index==3):
-			val="Rainfall"
-			y.append(x.rainfall)
-		elif(index==4):
-			val="Moisture"
-			y.append(x.moisture)
-		temp.append(y)
-	return render(request,'common.html',{'temp':temp,'tank':TD,'soil':SD,'weather':WSD,'name':val})
+		z=str(x.time)
+	    	y.append(z[:len(z)-6])
+	    	if(index==1):
+	    		val="Temp"
+	    		y.append(x.temp)
+	    	elif(index==2):
+	    		val="Humidity"
+	    		y.append(x.humidity)
+	    	elif(index==3):
+	    		val="Rainfall"
+	    		y.append(x.rainfall)
+	    	elif(index==4):
+	    		val="Moisture"
+	    		y.append(x.moisture)
+	    	temp.append(y)
+
+	return render(request,'common.html',{'temp':temp,'tank':TD,'soil':SD,'weather':WSD,'name':val,'obj':obj})
 def retrieve(request):
 	WaterLevel=request.GET['WaterLevel']
 	plantID=request.GET['plantID']
