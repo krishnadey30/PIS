@@ -80,7 +80,7 @@ body, html {height: 100%}
   opacity: 0.5;
 }
 
- #id2{
+#id2{
     width: 700px;
     height: 400px;
     background-color: black;
@@ -263,7 +263,7 @@ div.desc {
   <div class="w3-display-middle w3-jumbo">
     <!--<p><h3>dashboard</h3></p>-->
   </div>
-  <nav id="id1" class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center" style="width:15%" >
+  <nav id="id1" class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center" style="width:20%" >
   <div class="w3-display-topleft w3-container w3-xlarge">
 
     <br>
@@ -279,6 +279,10 @@ div.desc {
   </div>
   </div>
 
+  <br>
+  <div class="dropdown">
+    <p><button onclick="document.getElementById('AddPlant').style.display='block'" class="w3-button w3-black">Add Plant</button></p>
+  </div>
   <br>
   <div class="dropdown">
     <p>Tanks</p>
@@ -322,6 +326,45 @@ div.desc {
   </div>
 </div>
 </nav>
+
+<div id="AddPlant" class="w3-modal" >
+  <div class="w3-modal-content w3-animate-zoom">
+    <div class="w3-container w3-black w3-display-container" >
+      <span onclick="document.getElementById('AddPlant').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+      <h1>Add Plant</h1>
+    </div>
+      <div class="w3-container">
+        <br>
+        <br> 
+        <form action="/add/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-sub-w3">
+                  <input type="text" name="name" placeholder="Name " required="" />
+                <div class="icon-w3">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </div>
+                </div>
+                <div class="form-sub-w3">
+                  <input type="text" name="tank_id" placeholder="Tank Id" required="" />
+                <div class="icon-w3">
+                  <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                </div>
+                </div>
+                <div class="form-sub-w3">
+                  <input type="text" name="ws_id" placeholder="Weather Station Id" required="" />
+                <div class="icon-w3">
+                  <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                </div>
+                </div>
+                 
+                <div class="clear"></div>
+                <div class="submit-agileits">
+                  <input type="submit" value="Add Plant">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
 
 <!-- sensor values -->
 {% for  plants in all_plants %}

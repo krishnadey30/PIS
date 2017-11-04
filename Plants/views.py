@@ -111,6 +111,21 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request,'login.html', {})
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='/')
+def addplant(request):
+	context = RequestContext(request)
+	if request.method == 'POST':
+		plant_name = request.POST['name']
+		tank_id = request.POST['tank_id']
+		ws_id = request.POST['ws_id']
+		wsd=get_object_or_404(ws,id=ws_id)
+		tankd=get_object_or_404(tank,id=tank_id)
+		u = User.objects.get(username=request.user)
+		obj=plant(user_key=u.userprofile,ws_key=wsd,tank_key=tankd,plant_name=plant_name)
+		obj.save()
+	return HttpResponseRedirect('/dashboard')
+
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='/')
