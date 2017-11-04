@@ -8,11 +8,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.decorators.cache import cache_control
 
+
 def register(request):
 
     # Like before, get the request's context.
     if request.user.is_authenticated:
-		return redirect('plants')
+		return redirect('dashboard')
     context = RequestContext(request)
 
     # A boolean value for telling the template whether the registration was successful.
@@ -72,7 +73,7 @@ def register(request):
 def user_login(request):
     # Like before, obtain the context for the user's request.
     if request.user.is_authenticated:
-		return redirect('plants')
+		return redirect('dashboard')
     context = RequestContext(request)
 
     # If the request is a HTTP POST, try to pull out the relevant information.
@@ -120,78 +121,10 @@ def user_logout(request):
     # Take the user back to the homepage.
     return HttpResponseRedirect('/')
 
-#@login_required(login_url='/login/')
+
 def index(request):
  	return  render(request, 'index.html')
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url='/')
-def contact(request):
-	return render(request,'contact.html')
-
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url='/')
-def about(request):
-	return render(request,'about.html')
-
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url='/')
-def plants(request):
-    u = User.objects.get(username=request.user)
-    all_plants = plant.objects.filter(user_key=u.userprofile)
-    final=[]
-    maps=[]
-    for plants in all_plants:
-    	temp=[]
-    	m=[]
-    	m.append(plants.latitude)
-    	m.append(plants.longitude)
-    	m.append(str(plants.plant_name))
-    	temp.append(int(plants.id))
-    	temp.append(str(plants.plant_name))
-    	r=plants.tank_key
-    	SD=soil_data.objects.filter(plant_key=plants)
-    	x=SD[len(SD)-1].moisture
-    	temp.append(int(x))
-    	final.append(temp)
-    	maps.append(m)
-    return render(request,'plants.html',{'all_plants':final,'maps':maps})
-
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url='/')
-def common(request,plant_id,index):
-	index=int(index)
-	x=plant.objects.get(id=plant_id)
-	r=x.tank_key
-	w=x.ws_key
-	WSD=ws_data.objects.filter(ws_key=w)
-	SD=soil_data.objects.filter(plant_key=x)
-	TD=tank_data.objects.filter(tank_key=r)
-	if(index<=3):
-		obj=WSD
-	elif(index==4):
-		obj=SD
-	temp=[]
-	val=""
-	for x in obj:
-		y=[]
-		z=str(x.time)
-	    	y.append(z[:len(z)-6])
-	    	if(index==1):
-	    		val="Temp"
-	    		y.append(x.temp)
-	    	elif(index==2):
-	    		val="Humidity"
-	    		y.append(x.humidity)
-	    	elif(index==3):
-	    		val="Rainfall"
-	    		y.append(x.rainfall)
-	    	elif(index==4):
-	    		val="Moisture"
-	    		y.append(x.moisture)
-	    	temp.append(y)
-
-	return render(request,'common.html',{'temp':temp,'tank':TD,'soil':SD,'weather':WSD,'name':val,'obj':obj})
 def retrieve(request):
 	WaterLevel=request.GET['WaterLevel']
 	plantID=request.GET['plantID']
@@ -213,9 +146,79 @@ def retrieve(request):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='/')
 def profile(request):
-    context = RequestContext(request)
-    context_dict = {}
-    u = User.objects.get(username=request.user)
-    context_dict['user'] = u
-    context_dict['userprofile'] = u.userprofile
-    return render(request,'profile.html', context_dict)
+	context_dict={}
+	u = User.objects.get(username=request.user)
+	all_plants = plant.objects.filter(user_key=u.userprofile)
+	tanks = tank.objects.filter(user_key=u.userprofile)
+	context_dict['user'] = u
+	context_dict['userprofile'] = u.userprofile
+	context_dict['all_plants']=all_plants
+	context_dict['tank_all']=tanks
+	maps=[]
+	for plants in all_plants:
+		m=[]
+		m.append(plants.latitude)
+		m.append(plants.longitude)
+		m.append(str(plants.plant_name))
+		maps.append(m)
+	context_dict['maps_plants'] = maps
+	maps=[]
+	for tank_s in tanks:
+		m=[]
+		m.append(tank_s.latitude)
+		m.append(tank_s.longitude)
+		m.append("Tank"+str(tank_s.id))
+		maps.append(m)
+	context_dict['maps_tanks'] = maps
+	context_dict['soil_moisture'] = {}
+	for plants in all_plants:
+		SD=soil_data.objects.filter(plant_key=plants)
+		temp=[]
+		for x in SD:
+			y=[]
+			z=str(x.time)
+		    	y.append(z[:len(z)-6])
+			y.append(x.moisture)
+			temp.append(y)
+		context_dict['soil_moisture'][plants.id]=temp
+	context_dict['humidity'] = {}
+	context_dict['temperature'] = {}
+	context_dict['rainfall'] = {}
+	for plants in all_plants:
+		x=plants
+		w=x.ws_key
+		WSD=ws_data.objects.filter(ws_key=w)
+		humid=[]
+		temp=[]
+		rain=[]
+		for x in WSD:
+			y=[]
+			a=[]
+			b=[]
+			z=str(x.time)
+		    	y.append(z[:len(z)-6])
+			y.append(x.humidity)
+			a.append(z[:len(z)-6])
+			a.append(x.temp)
+			b.append(z[:len(z)-6])
+			b.append(x.rainfall)
+			temp.append(a)
+			humid.append(y)
+			rain.append(b)
+		context_dict['humidity'][plants.id]=humid
+		context_dict['temperature'][plants.id]=temp
+		context_dict['rainfall'][plants.id]=rain
+	context_dict['tanks'] = {}
+	for each_tank in tanks:
+		tank_d=tank_data.objects.filter(tank_key=each_tank)
+		data=[]
+		for x in tank_d:
+			y=[]
+			z=str(x.time)
+		    	y.append(z[:len(z)-6])
+			y.append(x.water_level)
+			data.append(y)
+		context_dict['tanks'][each_tank.id]=data
+	return render(request,'dashboard.html', context_dict)
+
+	

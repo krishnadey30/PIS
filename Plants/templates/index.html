@@ -1,179 +1,253 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html>
+<title>Home</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+body, html {
+    height: 100%;
+    color: #777;
+    line-height: 1.8;
+}
+
+/* Create a Parallax Effect */
+.bgimg-1, .bgimg-2, .bgimg-3 {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* First image (Logo. Full height) */
+.bgimg-1 {
+    background-image: url({% static 'Plants/images/4.jpg' %});
+    min-height: 100%;
+}
+
+/* Second image (Portfolio) */
+.bgimg-2 {
+    background-image: url({% static 'Plants/images/pink.jpg' %});
+    min-height: 400px;
+}
+
+/* Third image (Contact) */
+.bgimg-3 {
+    background-image: url({% static 'Plants/images/2.jpg' %});
+    min-height: 400px;
+}
+.button{
+  background-color: #3E7CA2  ;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    float:right;
+    border:2px solid white;
+  }
+.w3-wide {letter-spacing: 10px;}
+.w3-hover-opacity {cursor: pointer;}
+
+/* Turn off parallax scrolling for tablets and phones */
+@media only screen and (max-device-width: 1024px) {
+    .bgimg-1, .bgimg-2, .bgimg-3 {
+        background-attachment: scroll;
+    }
+}
+
+#id5{
+  margin-left: 950px;
+
+}
+</style>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar" id="myNavbar">
+    <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <a href="#home" class="w3-bar-item w3-button"><i class="fa fa-home" ></i> HOME</a>
+    <a href="#about" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-vcard-o" ></i> ABOUT</a>
+    <a href="#portfolio" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> PLANT</a>
+    <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
+    {% if user.is_authenticated %}
+    <a href="/dashboard" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-paper-plane"></i> DASHBOARD</a>
+    <a href="/logout" class="w3-bar-item w3-button w3-hide-small" style="float:right;"> <i class="fa fa-user-times" ></i> LOGOUT</a>
+    {% else %}
+    <a href="/login" class="w3-bar-item w3-button w3-hide-small" style="float:right;"> <i class="fa fa-user-circle-o" ></i> LOGIN</a>
+    <a href="/register" class="w3-bar-item w3-button w3-hide-small" style="float:right;"><i class="fa fa-pencil"></i> SIGN UP</a>
+    {% endif %}
+    <!---<a href="#login" class="w3-display-middle" style="white-space:nowrap; text-decoration:none;" >
+      <span class=" w3-padding-large w3-black w3-xsmall w3-wide w3-animate-opacity" class="w3-hide-small" id="id5">LOGIN</span>&nbsp;
+      <span class=" w3-padding-large w3-black w3-xsmall w3-wide w3-animate-opacity" class="w3-hide-small">SIGN UP</span>
+    </a>-->
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
+    <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
+    <a href="#portfolio" class="w3-bar-item w3-button" onclick="toggleFunction()">PLANT</a>
+    <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
+    <a href="/login" class="w3-bar-item w3-button">Login</a>
+  </div>
+</div>
+
+<!-- First Parallax Image with Logo Text -->
+<div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
+  <div class="w3-display-middle" style="white-space:nowrap;">
+    <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">INDIANA<span class="w3-hide-small"></span> FARMS</span>
+  </div>
+</div>
+
+<!-- Container (About Section) -->
+<div class="w3-content w3-container w3-padding-64" id="about">
+  <h3 class="w3-center">ABOUT OUR PROJECT</h3>
+  <p class="w3-center"><em>Plant Health</em></p>
+  <p>We have created a system which gives the current status of the plant in the farm.Indiana Farm sensors measure soil, plant and environmental variables to accurately measure water stress.Our advanced predicitive algorithms deliver real time irrigation access.Our project is to monitor the plant even from a far away distance where the actuators help in releaing the water in whenever there is a deficiency in the water level.This is done with the support of micro controllers and sensors.The sensors we used are soil moisture, temperature, humidity, rainfall.These values are compared with plant requirements which results in the activation of the actuators and hence help in irrigation of the plant.</p>
+  <div class="w3-row">
+    <div class="w3-col m6 w3-center w3-padding-large">
+      <p><b><i class="fa fa-user w3-margin-right"></i>Plant profile</b></p><br>
+      <img src={% static 'Plants/images/25.jpg' %} class="w3-round w3-image w3-opacity w3-hover-opacity-off" alt="Photo of Me" width="500" height="333">
+    </div>
+
+    <!-- Hide this text on small devices -->
+    <div class="w3-col m6 w3-hide-small w3-padding-large">
+      <p><br><br><br><br><br>The plant values are kept for the sake of assessment of the plant growth.Graphs are made and compared in the dashboard after logging in.The user can add a plant at any time he wants in his account and can know about the plant health wherver the user is.This project also helps the user know about the locality of the plant and which of the country it is suitable for the growth of the plant. The google maps and the latitude and longitude of the pkant adds an advantage for the user.</p>
+    </div>
+  </div>
+  
+  
+</div>
+
+<div class="w3-row w3-center w3-dark-grey w3-padding-16">
+  <div class="w3-quarter w3-section">
+    <span class="w3-xlarge"><i class="fa fa-bar-chart" style="font-size:30px"></i></i></span><br>
+    Graphs
+  </div>
+  <div class="w3-quarter w3-section">
+    <span class="w3-xlarge"><i class="fa fa-map-marker" style="font-size:30px"></i></span><br>
+    Maps
+  </div>
+  <div class="w3-quarter w3-section">
+    <span class="w3-xlarge"><i class="fa fa-tint" style="font-size:30px"></i></span><br>
+    Water_level
+  </div>
+  <div class="w3-quarter w3-section">
+    <span class="w3-xlarge"><i class="fa fa-tree" style="font-size:30px"></i></span><br>
+    Plants
+  </div>
+</div>
+
+<!-- Second Parallax Image with Portfolio Text -->
+<div class="bgimg-2 w3-display-container w3-opacity-min">
+  <div class="w3-display-middle">
+    <span class="w3-xxlarge w3-text-white w3-wide">PLANT</span>
+  </div>
+</div>
+
+<!-- Container (Portfolio Section) -->
+<div class="w3-content w3-container w3-padding-64" id="portfolio">
+  <h3 class="w3-center">OUR WORK</h3>
+  <p class="w3-center"><em>Here are some of interesting pics related to the project<br>Click on the image for details</em></p><br>
+
+  <!-- Responsive Grid. Four columns on tablets, laptops and desktops. Will stack on mobile devices/small screens (100% width) -->
+  <div class="w3-row-padding w3-center">
+    <div class="w3-col m3">
+      <img src={% static 'Plants/images/34.png' %} style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Soil Moisture sensor">
+    </div>
+
+    <div class="w3-col m3">
+      <img src={% static 'Plants/images/52.jpg' %} style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Some fresh blueberries">
+    </div>
+
+    <div class="w3-col m3">
+      <img src={% static 'Plants/images/42.jpg' %} style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Rainfall sensor">
+    </div>
+
+    <div class="w3-col m3">
+      <img src={% static 'Plants/images/58.jpg' %} style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Fine Soil">
+    </div>
+  </div>
+
+  <div class="w3-row-padding w3-center w3-section">
+    <div class="w3-col m3">
+      <img src={% static 'Plants/images/56.jpg' %} style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Clean WHite flowers">
+    </div>
+
+    <div class="w3-col m3">
+      <img src={% static 'Plants/images/37.jpg' %} style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="DHT(Temperature and humidity sensor)">
+    </div>
+
+    <div class="w3-col m3">
+      <img src={% static 'Plants/images/55.jpg' %} style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Healthy vegetables">
+    </div>
+
+    <div class="w3-col m3">
+      <img src={% static 'Plants/images/38.jpg' %} style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Water level">
+    </div>
     
-    <title>I-F</title>
+  </div>
+</div>
 
-<title>IndianaFarms &#8211; IndianaFarms solutions</title>
-<link rel='stylesheet' id='bootstrap-css' href={% static 'Plants/css1.css' %} type='text/css' media='all'/>
-<link rel='stylesheet' id='ie10-viewport-css' href={% static 'Plants/css2.css' %} type='text/css' media='all'/>
-<link rel='stylesheet' id='mailchimp_themes-css' href={% static 'Plants/css3.css' %} type='text/css' media='all'/>
-<link rel='stylesheet' id='mailchimp-css' href={% static 'Plants/css4.css' %} type='text/css' media='all'/>
-<link rel='stylesheet' id='styles-css' href={% static 'Plants/css5.css' %} type='text/css' media='all'/>
-<link rel='stylesheet' id='rwd-css' href={% static 'Plants/css6.css' %} type='text/css' media='all'/>
-<script src="{% static 'Plants/some.js' %}"></script><script>eval(mod_pagespeed_ya1SYeHc9T);</script>
-<script type='text/javascript' src="{% static 'Plants/some1.js' %}"></script>
-<script type='text/javascript' src="{% static 'Plants/some2.js' %}"></script>
-<script>eval(mod_pagespeed_YE$1v4d5Vq);</script>
-<script>eval(mod_pagespeed_EaiEWikN$Q);</script>
-<script>eval(mod_pagespeed_ajlLyfDBO9);</script>
-<script type='text/javascript' src="{% static 'Plants/costum.js' %}"></script>
-    <style type="text/css">.recentcomments a{display:inline!important;padding:0!important;margin:0!important}</style>
-      </head>
+<!-- Modal for full size images on click-->
+<div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'">
+  <span class="w3-button w3-large w3-black w3-display-topright" title="Close Modal Image"><i class="fa fa-remove"></i></span>
+  <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+    <img id="img01" class="w3-image">
+    <p id="caption" class="w3-opacity w3-large"></p>
+  </div>
+</div>
 
-  <body>
+<!-- Third Parallax Image with Portfolio Text -->
+<div class="bgimg-3 w3-display-container w3-opacity-min">
+  <div class="w3-display-middle">
+     <span class="w3-xxlarge w3-text-white w3-wide">CONTACT</span>
+  </div>
+</div>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href=""><script pagespeed_no_defer="">//<![CDATA[
-(function(){var g=this,h=function(b,d){var a=b.split("."),c=g;a[0]in c||!c.execScript||c.execScript("var "+a[0]);for(var e;a.length&&(e=a.shift());)a.length||void 0===d?c[e]?c=c[e]:c=c[e]={}:c[e]=d};var l=function(b){var d=b.length;if(0<d){for(var a=Array(d),c=0;c<d;c++)a[c]=b[c];return a}return[]};var m=function(b){var d=window;if(d.addEventListener)d.addEventListener("load",b,!1);else if(d.attachEvent)d.attachEvent("onload",b);else{var a=d.onload;d.onload=function(){b.call(this);a&&a.call(this)}}};var n,p=function(b,d,a,c,e){this.f=b;this.h=d;this.i=a;this.c=e;this.e={height:window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight,width:window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth};this.g=c;this.b={};this.a=[];this.d={}},q=function(b,d){var a,c,e=d.getAttribute("pagespeed_url_hash");if(a=e&&!(e in b.d))if(0>=d.offsetWidth&&0>=d.offsetHeight)a=!1;else{c=d.getBoundingClientRect();var f=document.body;a=c.top+("pageYOffset"in window?window.pageYOffset:(document.documentElement||f.parentNode||f).scrollTop);c=c.left+("pageXOffset"in window?window.pageXOffset:(document.documentElement||f.parentNode||f).scrollLeft);f=a.toString()+","+c;b.b.hasOwnProperty(f)?a=!1:(b.b[f]=!0,a=a<=b.e.height&&c<=b.e.width)}a&&(b.a.push(e),b.d[e]=!0)};p.prototype.checkImageForCriticality=function(b){b.getBoundingClientRect&&q(this,b)};h("pagespeed.CriticalImages.checkImageForCriticality",function(b){n.checkImageForCriticality(b)});h("pagespeed.CriticalImages.checkCriticalImages",function(){r(n)});var r=function(b){b.b={};for(var d=["IMG","INPUT"],a=[],c=0;c<d.length;++c)a=a.concat(l(document.getElementsByTagName(d[c])));if(0!=a.length&&a[0].getBoundingClientRect){for(c=0;d=a[c];++c)q(b,d);a="oh="+b.i;b.c&&(a+="&n="+b.c);if(d=0!=b.a.length)for(a+="&ci="+encodeURIComponent(b.a[0]),c=1;c<b.a.length;++c){var e=","+encodeURIComponent(b.a[c]);131072>=a.length+e.length&&(a+=e)}b.g&&(e="&rd="+encodeURIComponent(JSON.stringify(s())),131072>=a.length+e.length&&(a+=e),d=!0);t=a;if(d){c=b.f;b=b.h;var f;if(window.XMLHttpRequest)f=new XMLHttpRequest;else if(window.ActiveXObject)try{f=new ActiveXObject("Msxml2.XMLHTTP")}catch(k){try{f=new ActiveXObject("Microsoft.XMLHTTP")}catch(u){}}f&&(f.open("POST",c+(-1==c.indexOf("?")?"?":"&")+"url="+encodeURIComponent(b)),f.setRequestHeader("Content-Type","application/x-www-form-urlencoded"),f.send(a))}}},s=function(){var b={},d=document.getElementsByTagName("IMG");if(0==d.length)return{};var a=d[0];if(!("naturalWidth"in a&&"naturalHeight"in a))return{};for(var c=0;a=d[c];++c){var e=a.getAttribute("pagespeed_url_hash");e&&(!(e in b)&&0<a.width&&0<a.height&&0<a.naturalWidth&&0<a.naturalHeight||e in b&&a.width>=b[e].k&&a.height>=b[e].j)&&(b[e]={rw:a.width,rh:a.height,ow:a.naturalWidth,oh:a.naturalHeight})}return b},t="";h("pagespeed.CriticalImages.getBeaconData",function(){return t});h("pagespeed.CriticalImages.Run",function(b,d,a,c,e,f){var k=new p(b,d,a,e,f);n=k;c&&m(function(){window.setTimeout(function(){r(k)},0)})});})();pagespeed.CriticalImages.Run('/mod_pagespeed_beacon','#','Ez0F1MDYS1',true,false,'FyvSv1o8kIQ');
-//]]></script><img src="{% static 'Plants/images/logo_indiana.png' %}" pagespeed_url_hash="3086239363" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="">Home</a></li>
-            {% if user.is_authenticated %}
-            <li><a href="/plants">Plants</a></li>
-            {% endif %}
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
-            {% if user.is_authenticated %}
-            <li><a href="/logout">LogOut</a></li>
-            {% else %}
-            <li><a href="/register">Register</a></li>
-            <li><a href="/login">Login</a></li>
-            {% endif %}
-          </ul>
-        </div><!--/.nav-collapse -->
+<!-- Container (Contact Section) -->
+<div class="w3-content w3-container w3-padding-64" id="contact">
+  <h3 class="w3-center">CONTACT US</h3>
+  <p class="w3-center"><em>Here's our details</em></p>
+
+  <div class="w3-row w3-padding-32 w3-section">
+    <div class="w3-col m4 w3-container">
+      <!-- Add Google Maps -->
+      <div id="googleMap" class="w3-round-large w3-greyscale" style="width:100%;height:400px;"></div>
+    </div>
+    <div class="w3-col m8 w3-panel">
+      <div class="w3-large w3-margin-bottom">
+        <i class="fa fa-map-marker fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> IIIT Sri City<br>
+        <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: 8919085523<br>
+        <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: krishnakumar.d16@iiits.in<br>
       </div>
-    </nav>
+    </div>
+  </div>
+</div>
+<p><iframe style="border: 0;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62063.64957286757!2d79.96482166467064!3d13.536935000116202!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4d775408997c13%3A0x331b190facdc26d2!2sSri+City%2C+Andhra+Pradesh+517646!5e0!3m2!1sen!2sin!4v1507303419905" width="1600" height="600" frameborder="0" style="border:0" allowfullscreen></iframe></p>
 
-    <div class="clear"></div>
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
+  <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
+  <div class="w3-xlarge w3-section">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  </div>
+  <p>Powered by <a href="#" title="Plant" target="_blank" class="w3-hover-text-green">Group-2</a></p>
+</footer>
+ 
+<!-- Add Google Maps -->
 
-    <header class="hero-wrap hp-hero-wrap">
-
-      <div class="hero hp-hero">
-        <div class="hero-content-wrap">
-          <div class="hp-hero-content">
-            <div role="hp-hero-spacer">&nbsp;</div>
-            <h1>Precision Irrigation Management</h1>
-<p>Save water and increase yields</p>
-            <p><a class="cta" role="primary" href="/plants">Dashboard</a></p>
-          </div>
-        </div>
-      </div>
-    </header><!-- /.container -->
-
-    <main>
-
-    
-      <article class="hp-product-wrap">
-        <!--<div role="green-bg"></div>-->
-        <div class="container">
-          <h2>Precise irrigation optimization from a comprehensive sensor package.</h2>
-        </div>
-        <div class="hp-slideshow-wrap">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-8 hp-slideshow">
-                  <div class="cycle-slideshow" data-cycle-pager=".cycle-slideshow-pager">
-                    <img src="{% static 'Plants/images/FIG2.jpg' %}" pagespeed_url_hash="2852511171" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/>
-                    <img src="{% static 'Plants/images/img2.jpg' %}" pagespeed_url_hash="3147011092" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/>
-                  </div>
-
-              </div>
-
-              <div class="col-md-4 hp-slideshow-content" role="hp-desktop-content">
-                <h3>IndianaFarm sensors measure <strong>soil, plant</strong> and <strong>environmental</strong> variables to accurately measure <strong>water stress</strong>. Our advanced predictive algorithms deliver real-time irrigation actions.</h3>
-                <p><a class="cta" role="secondary" href="/plants">Proceed</a></p>
-              </div>
-
-              <div class="clear"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="cycle-slideshow-pager-wrap" role="hp-desktop-pager">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-8">
-
-                <div class="cycle-slideshow-pager"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Responsive container - only shows on mobile -->
-        <div class="col-sm-12 hp-slideshow-content" role="hp-rwd-content">
-          <div class="cycle-slideshow-pager"></div>
-          <h3>IndianaFarm sensors measure <strong>soil, plant</strong> and <strong>environmental</strong> variables to accurately measure <strong>water stress</strong>. Our advanced predictive algorithms deliver real-time irrigation actions.</h3>
-          <p><a class="cta" role="secondary" href="/about">Learn More</a></p>
-        </div>
-        <p>&nbsp;</p>
-      </article><!-- /.hp-product -->
-
-      <div class="clear"></div>
-
-      <article class="hp-contact">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6" role="subscribe">
-              <h2>Join our newsletter.</h2>
-              
-              <div id="mc_embed_signup">
-              <form action="" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate email-subscription"  novalidate>
-                  <div id="mc_embed_signup_scroll">
-                
-              <div class="mc-field-group">
-                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
-              </div>
-                <div id="mce-responses" class="clear">
-                  <div class="response" id="mce-error-response" style="display:none"></div>
-                  <div class="response" id="mce-success-response" style="display:none"></div>
-                </div> 
-                  <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_a55902e0a9f1ecd7506c5dffd_825dc611c7" tabindex="-1" value=""></div>
-                  <div class="clear"></div>
-                  </div>
-              </form>
-              </div>
-            </div>
-            <div class="col-sm-6" role="follow">
-              <h2>Find us on Twitter.</h2>
-              <p><a href="">@Indiana_Farms</a></p>
-            </div>
-          </div>
-        </div>
-      </article><!-- /.hp-contact -->
-
-
-    </main><!-- /main -->
-
-    <footer role="global-footer">
-      <div class="container">
-        <div class="row">
-          <nav class="col-sm-6">
-            <ul>
-              <li><a href="">Home</a></li>
-              <li><a href="/plants">Plants</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="/contact">Contact</a></li>
-            </ul>
-          </nav>
-          <p class="col-sm-6">&copy; Copyright 2017 ITWS-3(GROUP-2)</p>
-        </div>
-      </div>
-    </footer>
-
-
-    <script type='text/javascript' src="{% static 'Plants/wp-embed.min.js' %}"></script>
-  </body>
+</body>
 </html>
