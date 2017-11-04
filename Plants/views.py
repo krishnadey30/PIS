@@ -142,15 +142,20 @@ def index(request):
 
 def retrieve(request):
 	WaterLevel=request.GET['WaterLevel']
-	plantID=request.GET['plantID']
-	soilMoisture=request.GET['soilMoisture']
+	plantIDa=request.GET['plantIDa']
+	plantIDb=request.GET['plantIDb']
+	soilMoisturea=request.GET['soilMoisturea']
+	soilMoistureb=request.GET['soilMoistureb']
 	humidity=request.GET['humidity']
 	temperature=request.GET['temperature']
 	rainChances=request.GET['rainChances']
-	o=get_object_or_404(plant,id=plantID)
-	r=o.tank_key
-	w=o.ws_key
-	s=soil_data(plant_key=o,moisture=soilMoisture)
+	p1=get_object_or_404(plant,id=plantIDa)
+	p2=get_object_or_404(plant,id=plantIDb)
+	r=p1.tank_key
+	w=p2.ws_key
+	s=soil_data(plant_key=p1,moisture=soilMoisturea)
+	s.save()
+	s=soil_data(plant_key=p2,moisture=soilMoistureb)
 	s.save()
 	t=tank_data(tank_key=r,water_level=WaterLevel)
 	t.save()
