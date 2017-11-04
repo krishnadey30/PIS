@@ -12,7 +12,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     # The additional attributes we wish to include.
-    Phone_no = models.IntegerField(default=0, blank=True)
+    Phone_no = models.IntegerField(default=0, blank=True)				
     picture = models.ImageField(upload_to='profile_images', blank=True)
     def save(self, *args, **kwargs):
         if self.picture:
