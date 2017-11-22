@@ -288,6 +288,10 @@ div.desc {
   </div>
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
  <div class="dropdown">
+    <p><button onclick="document.getElementById('EditPlant').style.display='block'" class="w3-button w3-black">Edit Items</button></p>
+  </div>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <div class="dropdown">
     <p><button onclick="document.getElementById('Remove').style.display='block'" class="w3-button w3-black">Remove Items</button></p>
   </div>
   <div class="dropdown">
@@ -372,8 +376,6 @@ div.desc {
             <div class="submit-agileits">
               <input type="submit" value="Add Plant">
             </div>
-            <br>
-            <br>
           </form>
         </div>
         <div style="float: right;width: 50%;padding-left: 20px ;padding-right: 20px ;padding-bottom: 20px;color:black">
@@ -395,16 +397,14 @@ div.desc {
             <div class="form-sub-w3 icon-w3">
               <input type="text" name="lat" placeholder="Latitude" required="" />
               <i class="fa fa-globe" aria-hidden="true"></i>
-            </div><br>
+            </div>
             <div class="clear"></div><br>
             <div class="submit-agileits">
               <input type="submit" value="Add Station">
             </div>
-            <br>
-            <br>
           </form>
         </div>
-        <div style="float: left;width: 40%;padding-top: 20px;color:black">
+        <div style="float: left;width: 40%;padding-left: 20px;color:black">
           <form action="/addtank/" method="post" enctype="multipart/form-data" name="Add Plant">
           {% csrf_token %}
             <div class="form-sub-w3">
@@ -424,7 +424,7 @@ div.desc {
               <input type="text" name="lat" placeholder="Latitude" required="" />
               <i class="fa fa-globe" aria-hidden="true"></i>
             </div><br>
-            <div class="clear"></div><br>
+            <div class="clear"></div>
             <div class="submit-agileits">
               <input type="submit" value="Add Reservoir">
             </div>
@@ -437,6 +437,118 @@ div.desc {
         </div>
 
 
+<!--edit items-->
+
+
+
+
+<div id="EditPlant" class="w3-modal" >
+  <div class="w3-modal-content w3-animate-zoom">
+    <div class="w3-container w3-black w3-display-container" >
+      <span onclick="document.getElementById('EditPlant').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+      <h1>Edit Items</h1>
+    </div>
+      <div class="w3-container">
+        <br>
+        <br>
+
+        <div style="float: left;width: 50%;padding-left: 20px ;padding-right: 20px ;padding-bottom: 20px;color:black">
+          <form action="/editplant/" method="post" enctype="multipart/form-data" name="Add Plant">
+            {% csrf_token %}
+            <div class="form-sub-w3">
+              <label>Edit Plant</label><br>
+            </div>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="plant_id" placeholder="Plant Id" required="" />
+              <i class="fa fa-tree" aria-hidden="true"></i>
+            </div><br> 
+            <div class="form-sub-w3 icon-w3">
+                <input type="text" name="name" placeholder="Plant Name " />
+                <i class="fa fa-tree" aria-hidden="true"></i>
+            </div><br>
+             
+            
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="long" placeholder="Longitude" />
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+            </div><br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="lat" placeholder="Latitude" />
+              <i class="fa fa-globe" aria-hidden="true"></i>
+            </div><br>
+            <div class="clear"></div>
+            <div class="submit-agileits">
+              <input type="submit" value="Edit Plant">
+            </div>
+            <br>
+            <br>
+          </form>
+        </div>
+        <div style="float: right;width: 50%;padding-left: 20px ;padding-right: 20px ;padding-bottom: 20px;color:black">
+          <form action="/editws/" method="post" enctype="multipart/form-data" name="Add Plant">
+          {% csrf_token %}
+            <div class="form-sub-w3">
+              <label>Edit Weather Station</label>
+            </div>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="ws_id" placeholder="Station Id" required="" />
+              <i class="fa fa-flask" aria-hidden="true"></i>
+            </div><br>
+            <div class="form-sub-w3 icon-w3">
+                <input type="text" name="name" placeholder="Name "/>
+                <i class="fa fa-cloud" aria-hidden="true"></i>
+            </div>
+            <br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="long" placeholder="Longitude"/>
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+            </div>
+            <br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="lat" placeholder="Latitude"/>
+              <i class="fa fa-globe" aria-hidden="true"></i>
+            </div>
+            <div class="clear"></div><br>
+            <div class="submit-agileits">
+              <input type="submit" value="Edit Station">
+            </div>
+          </form>
+        </div>
+        <div style="float: left;width: 50%;padding-left: 20px;color:black">
+          <form action="/edittank/" method="post" enctype="multipart/form-data" name="Add Plant">
+          {% csrf_token %}
+            <div class="form-sub-w3">
+              <label>Edit Reservoir</label>
+            </div>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="tank_id" placeholder="Reservoir Id" required="" />
+              <i class="fa fa-flask" aria-hidden="true"></i>
+            </div><br>
+            <div class="form-sub-w3 icon-w3">
+                <input type="text" name="name" placeholder="Name "/>
+                <i class="fa fa-tint" aria-hidden="true"></i>
+            </div>
+            <br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="long" placeholder="Longitude"/>
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+            </div>
+            <br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="lat" placeholder="Latitude"/>
+              <i class="fa fa-globe" aria-hidden="true"></i>
+            </div><br>
+            <div class="clear"></div>
+            <div class="submit-agileits">
+              <input type="submit" value="Edit Reservoir">
+            </div>
+            <br>
+            <br>
+          </form>
+        </div>
+            </div>
+          </div>
+        </div>
 
 <!-- sensor values -->
 {% for  plants in all_plants %}

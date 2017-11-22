@@ -166,6 +166,60 @@ def addws(request):
 		obj=ws(user_key=u.userprofile,location_name=ws_name,longitude=longi,latitude=lati)
 		obj.save()
 	return HttpResponseRedirect('/dashboard')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='/')
+def editws(request):
+	if request.method == 'POST':
+		ws_id = request.POST['ws_id']
+		ws_name = request.POST['name']
+		longi=request.POST['long']
+		lati=request.POST['lat']
+		wsd=get_object_or_404(ws,id=ws_id)
+		if(len(ws_name)>1):
+			wsd.location_name=ws_name
+		if(len(longi)>1):
+			wsd.longitude=longi
+		if(len(lati)>1):
+			wsd.latitude=lati
+		wsd.save()
+	return HttpResponseRedirect('/dashboard')
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='/')
+def edittank(request):
+	if request.method == 'POST':
+		tank_id = request.POST['tank_id']
+		t_name = request.POST['name']
+		longi=request.POST['long']
+		lati=request.POST['lat']
+		td=get_object_or_404(tank,id=tank_id)
+		if(len(t_name)>1):
+			td.tank_name=t_name
+		if(len(longi)>1):
+			td.longitude=longi
+		if(len(lati)>1):
+			td.latitude=lati
+		td.save()
+	return HttpResponseRedirect('/dashboard')
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='/')
+def editplant(request):
+	if request.method == 'POST':
+		plant_id = request.POST['plant_id']
+		p_name = request.POST['name']
+		longi=request.POST['long']
+		lati=request.POST['lat']
+		p=get_object_or_404(plant,id=plant_id)
+		if(len(p_name)>1):
+			p.plant_name=p_name
+		if(len(longi)>1):
+			p.longitude=longi
+		if(len(lati)>1):
+			p.latitude=lati
+		p.save()
+	return HttpResponseRedirect('/dashboard')
+
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='/')
