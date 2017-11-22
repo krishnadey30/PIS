@@ -31,7 +31,9 @@ class tank(models.Model):
 	user_key=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
 	longitude=models.FloatField(default=0)
 	latitude=models.FloatField(default=0)
-	tank_volume=models.FloatField(default=0)
+	tank_name=models.CharField(max_length=300,blank=True)
+	def __str__(self):
+		return str(self.tank_name)
 
 class tank_data(models.Model):
 	tank_key=models.ForeignKey(tank,on_delete=models.CASCADE)
@@ -45,6 +47,8 @@ class ws(models.Model):
 	longitude=models.FloatField(default=0)
 	latitude=models.FloatField(default=0)
 	location_name=models.CharField(max_length=300)
+	def __str__(self):
+		return str(self.location_name)
 
 class ws_data(models.Model):
 	ws_key=models.ForeignKey(ws,on_delete=models.CASCADE)
@@ -57,8 +61,8 @@ class ws_data(models.Model):
 
 class plant(models.Model):
 	user_key=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
-	ws_key=models.ForeignKey(ws,on_delete=models.CASCADE)
-	tank_key=models.ForeignKey(tank,on_delete=models.CASCADE)
+	ws_key=models.ForeignKey(ws)
+	tank_key=models.ForeignKey(tank)
 	plant_name=models.CharField(max_length=200)
 	longitude=models.FloatField(default=0)
 	latitude=models.FloatField(default=0)
@@ -70,5 +74,5 @@ class soil_data(models.Model):
 	time = models.DateTimeField('date published',default=datetime.now, blank=True)
 	moisture=models.FloatField(default=0)
 	def __str__(self):
-		return str(self.moisture)
+		return str(self.plant_key.plant_name)
 

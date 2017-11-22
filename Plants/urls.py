@@ -3,6 +3,10 @@ from . import views
 urlpatterns = [
     url(r'^$',views.index,name='index' ),
     url(r'^retrieve/$',views.retrieve,name="retrieve"),
+    url(r'^addws/$',views.addws,name="addws"),
+    url(r'^remove/$',views.remove,name="remove"),
+    url(r'^update/$',views.updateprofile,name="updateprofile"),
+    url(r'^addtank/$',views.addtank,name="addtank"),
     url(r'^add/$',views.addplant,name="addplant"),
     url(r'^register/$',views.register, name='register'),
     url(r'^login/$', views.user_login, name='login'),

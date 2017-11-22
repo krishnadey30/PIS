@@ -53,7 +53,8 @@ def register(request):
 
             # Update our variable to tell the template registration was successful.
             registered = True
-
+            login(request,user)
+            return HttpResponseRedirect('/')
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.
         # They'll also be shown to the user.
@@ -111,21 +112,89 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request,'login.html', {})
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='/')
+def updateprofile(request):
+	if request.method == 'POST':
+		f_name = request.POST['fname']
+		l_name = request.POST['lname']
+		passw = request.POST['password']
+		em= request.POST['email']
+		u = User.objects.get(username=request.user)
+		if(len(f_name)>1):
+			u.first_name=f_name
+		if(len(l_name)>1):
+			u.last_name=l_name
+		if(len(passw)>6):
+			u.set_password(passw)
+			login(request, u)
+		if 'image' in request.FILES:
+			print "picture chsnge"
+			x=u.userprofile
+			x.picture = request.FILES['image']
+			x.save()
+		if(len(em)>0):
+			u.email=em
+		u.save()
+	return HttpResponseRedirect('/dashboard')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='/')
 def addplant(request):
-	context = RequestContext(request)
+	#context = RequestContext(request)
 	if request.method == 'POST':
 		plant_name = request.POST['name']
 		tank_id = request.POST['tank_id']
 		ws_id = request.POST['ws_id']
+		longi=request.POST['long']
+		lati=request.POST['lat']
 		wsd=get_object_or_404(ws,id=ws_id)
 		tankd=get_object_or_404(tank,id=tank_id)
 		u = User.objects.get(username=request.user)
-		obj=plant(user_key=u.userprofile,ws_key=wsd,tank_key=tankd,plant_name=plant_name)
+		obj=plant(user_key=u.userprofile,ws_key=wsd,tank_key=tankd,plant_name=plant_name,longitude=longi,latitude=lati)
+		obj.save()
+	return HttpResponseRedirect('/dashboard')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='/')
+def addws(request):
+	if request.method == 'POST':
+		ws_name = request.POST['name']
+		longi=request.POST['long']
+		lati=request.POST['lat']
+		u = User.objects.get(username=request.user)
+		obj=ws(user_key=u.userprofile,location_name=ws_name,longitude=longi,latitude=lati)
 		obj.save()
 	return HttpResponseRedirect('/dashboard')
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='/')
+def addtank(request):
+	if request.method == 'POST':
+		t_name = request.POST['name']
+		longi=request.POST['long']
+		lati=request.POST['lat']
+		u = User.objects.get(username=request.user)
+		obj=tank(user_key=u.userprofile,tank_name=t_name,longitude=longi,latitude=lati)
+		obj.save()
+	return HttpResponseRedirect('/dashboard')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='/')
+def remove(request):
+	if request.method == 'POST':
+		plant_id = request.POST['name']
+		tank_id = request.POST['tank_id']
+		ws_id = request.POST['ws_id']
+		if(len(plant_id)>0):
+			p1=get_object_or_404(plant,id=plant_id)
+			p1.delete()
+		if(len(tank_id)>0):
+			t1=get_object_or_404(tank,id=tank_id)
+			t1.delete()
+		if(len(ws_id)>0):
+			w1=get_object_or_404(ws,id=ws_id)
+			w1.delete()
+	return HttpResponseRedirect('/dashboard')
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='/')
@@ -196,8 +265,9 @@ def profile(request):
 		temp=[]
 		for x in SD:
 			y=[]
+			print x.time
 			z=str(x.time)
-		    	y.append(z[:len(z)-6])
+		    	y.append(z[:len(z)-9])
 			y.append(x.moisture)
 			temp.append(y)
 		context_dict['soil_moisture'][plants.id]=temp
@@ -216,7 +286,7 @@ def profile(request):
 			a=[]
 			b=[]
 			z=str(x.time)
-		    	y.append(z[:len(z)-6])
+		    	y.append(z[:len(z)-9])
 			y.append(x.humidity)
 			a.append(z[:len(z)-6])
 			a.append(x.temp)
@@ -235,7 +305,7 @@ def profile(request):
 		for x in tank_d:
 			y=[]
 			z=str(x.time)
-		    	y.append(z[:len(z)-6])
+		    	y.append(z[:len(z)-9])
 			y.append(x.water_level)
 			data.append(y)
 		context_dict['tanks'][each_tank.id]=data

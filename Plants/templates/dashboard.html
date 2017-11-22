@@ -3,8 +3,11 @@
 <!DOCTYPE html>
 <html>
 <title>I-F</title>
-<meta charset="UTF-8"> 
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 
@@ -24,35 +27,8 @@ body, html {height: 100%}
 
   object-fit: cover;
 }
-
-/* navigation */
-.topnav {
-  overflow: hidden;
-  background-color: #333;
-}
-
-.topnav a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.topnav a.active {
-    background-color: #4CAF50;
-    color: white;
-}
-/* strat */
 .bgimg {
-    background-image: url({% static 'Plants/images/pla.jpg' %});
+    background-image: url({% static 'Plants/images/12.jpg' %});
     min-height: 100%;
     background-position: center;
     background-size: cover;
@@ -169,7 +145,7 @@ div.desc {
     border-width: 5px;
     border-color: #808080;
     border-radius: 10px;
-   
+
 }
 
 .water {
@@ -202,22 +178,25 @@ div.desc {
 </style>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript">
-    const showMap = (arr, elt) => {
     google.charts.load('current', {
-      'packages': ['map'],
+      'packages': ['corechart', 'line','map'],
       'mapsApiKey': 'AIzaSyCUXATclYI8vfBPWa3HAYyn_Vj4xAZ4sgc'
     });
-    google.charts.setOnLoadCallback(drawMap(arr, elt));
+    const showMap = (arr,img1,img2,elt) => {
 
-    function drawMap (arr, elt) {
+    google.charts.setOnLoadCallback(drawMap(arr,img1,img2,elt));
+
+    function drawMap (arr,img1,img2, elt) {
       var data = new google.visualization.DataTable();
       data.addColumn('number', 'lat');
       data.addColumn('number', 'long');
       data.addColumn('string', 'Name');
 
       data.addRows(arr);
-
+      console.log(img1);
       var options = {
+          'width':850,
+                         'height':500,
          zoomLevel: 6,
          enableScrollWheel: true,
         showTooltip: true,
@@ -225,8 +204,8 @@ div.desc {
         useMapTypeControl: true,
           icons: {
             default: {
-              normal: '{% static 'Plants/images/tea-plant-leaf-icon.png' %}',
-              selected: '{% static 'Plants/images/tea-plant-leaf-icon72.png' %}'
+              normal: img1,
+              selected: img2
             }
           }
         };
@@ -235,45 +214,36 @@ div.desc {
         map.draw(data, options);
       }
     }
-
-  </script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-
-      
       const showGraph = (arr, elt) => {
         // console.log(arr)
         // Load the Visualization API and the corechart package.
-        google.charts.load('current', {packages: ['corechart', 'line']});
+
         google.charts.setOnLoadCallback(drawChart(arr, elt));
         // Callback that creates and populates a data table,
         // instantiates the pie chart, passes in the data and
         // draws it.
         function drawChart(arr, elt) {
-          // console.log(elt)
+           console.log(arr.length)
+           var x=elt.substring(1, elt.length - 1);
           // Create the data table.
           var data = new google.visualization.DataTable();
-          data.addColumn('string', 'Time');
-          data.addColumn('number', `values`);
-          data.addRows(arr);
+          data.addColumn('datetime', 'Time');
+          data.addColumn('number', x);
+          for (var i = 0; i < arr.length; i++) {
+            var date_test=new Date(arr[i][0].replace(/-/g,"/"));
+            data.addRow([new Date(arr[i][0].replace(/-/g,"/")),arr[i][1]]);
+          }
+
           var options = {
-                         'width':600,
-                         'height':300,
+                         'width':850,
+                         'height':500,
                           legend: { position: 'top', textStyle: {color: 'indigo', fontSize: 16}},
-                          animation:{
-                          duration: 1000,
-                          easing: 'out',
-                        },
-                         axes: {
-            x: {
-              0: {side: 'botoom'}
-            }
-          },
+
           hAxis: {
-            title: 'Date & Time'
+            title: 'Time'
           },
           vAxis: {
-            title: 'values'
+            title: x+` values`
           }
                        };
 
@@ -284,18 +254,24 @@ div.desc {
       }
     </script>
 <body class="bgimg w3-display-container w3-text-white" >
-  
-  <div><a href="/logout" class="w3-bar-item w3-button w3-hide-small" style="float:right;"> <i class="fa fa-user-times" ></i></a></div>
 <div >
-  <div class="w3-display-middle w3-jumbo">
-    <!--<p><h3>dashboard</h3></p>-->
+<nav class="navbar navbar-inverse navbar-fixed-top" style="background: black; border-bottom: white;">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
+    </ul>
+  <div class="navbar-header">
+    <a class="navbar-brand" href="/"><img src={% static 'Plants/images/if.png' %} height=20px></a>
   </div>
-<div class="topnav"  style="width : 20px" class="w3-topbar w3-bar-block w3-small w3-hide-small w3-center">
-  <div class="w3-display-topleft w3-container w3-xlarge">
-
-
-    &nbsp;&nbsp;<button onclick="document.getElementById('user').style.display='block'" class="w3-button w3-black">
-      {% if userprofile %}<img src="{{ user.userprofile.picture.url }}" class="user" />{% else %}<i class="fa fa-user" style="font-size:70px;color:white;text-shadow:3px 3px 4px #000000;"></i>{% endif %}</button>
+  <div class="dropdown navbar-right">
+    <button onclick="document.getElementById('user').style.display='block'" class="w3-button w3-black">
+      {% if userprofile %}
+        <img src="{{ user.userprofile.picture.url }}" class="user" />
+      {% else %}
+        <i class="fa fa-user" style="font-size:70px;color:white;text-shadow:3px 3px 4px #000000;"></i>
+      {% endif %}
+    </button>
+  </div>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <div class="dropdown">
     <p><button class="w3-button w3-black">Plants</button></p>
@@ -308,9 +284,12 @@ div.desc {
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
   <div class="dropdown">
-    <p><button onclick="document.getElementById('AddPlant').style.display='block'" class="w3-button w3-black">Add Plant</button></p>
+    <p><button onclick="document.getElementById('AddPlant').style.display='block'" class="w3-button w3-black">Add Items</button></p>
   </div>
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <div class="dropdown">
+    <p><button onclick="document.getElementById('Remove').style.display='block'" class="w3-button w3-black">Remove Items</button></p>
+  </div>
   <div class="dropdown">
     <p><button class="w3-button w3-black">Tanks</button></p>
   <div class="dropdown-content">
@@ -333,7 +312,7 @@ div.desc {
     <p><button class="w3-button w3-black">Graph: Tanks</button></p>
   <div class="dropdown-content">
     {% for tank in tank_all %}
-   <p><button onclick="showGraph({{tanks | getkey:tank.id | safe}}, '#graphtank');document.getElementById('graphtank{{tank.id}}').style.display='block'" class="w3-button w3-black">Tank {{tank.id}}</button></p>
+   <p><button onclick="showGraph({{tanks | getkey:tank.id | safe}}, '#tanklevel{{tank.id}}');document.getElementById('graphtank{{tank.id}}').style.display='block'" class="w3-button w3-black">Tank {{tank.id}}</button></p>
    {% endfor %}
   </div>
   </div>
@@ -341,14 +320,14 @@ div.desc {
   <div class="dropdown">
     <p><button class="w3-button w3-black">Maps</button></p>
   <div class="dropdown-content">
-<p><button onclick="showMap({{maps_plants|safe}},'#maps_plants'); document.getElementById('plantmap').style.display='block'" class="w3-button w3-black">Plant</button></p>
-     <p><button onclick="showMap({{maps_tanks|safe}},'#maps_tanks');document.getElementById('tankmap').style.display='block'" class="w3-button w3-black">Tank</button></p>
+<p><button onclick="showMap({{maps_plants|safe}},'{% static 'Plants/images/tea-plant-leaf-icon.png' %}','{% static 'Plants/images/tea-plant-leaf-icon72.png' %}','#maps_plants'); document.getElementById('plantmap').style.display='block'" class="w3-button w3-black">Plant</button></p>
+     <p><button onclick="showMap({{maps_tanks|safe}},'{% static 'Plants/images/big-water-tank-16.png' %}','{% static 'Plants/images/big-water-tank-72.png' %}','#maps_tanks');document.getElementById('tankmap').style.display='block'" class="w3-button w3-black">Tank</button></p>
   </div>
   </div>
 
 
   <div class="w3-display-bottomleft w3-container">
-    
+
   </div>
 </div>
 </div>
@@ -357,46 +336,107 @@ div.desc {
   <div class="w3-modal-content w3-animate-zoom">
     <div class="w3-container w3-black w3-display-container" >
       <span onclick="document.getElementById('AddPlant').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
-      <h1>Add Plant</h1>
+      <h1>Add Items</h1>
     </div>
       <div class="w3-container">
         <br>
-        <br> 
+        <br>
 
-
-        <form action="/add/" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-sub-w3">
-                  <input type="text" name="name" placeholder="Name " required="" />
-                <div class="icon-w3">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                </div>
-                </div>
-                <div class="form-sub-w3">
-                  <input type="text" name="tank_id" placeholder="Tank Id" required="" />
-                <div class="icon-w3">
-                  <i class="fa fa-unlock-alt" aria-hidden="true"></i>
-                </div>
-                </div>
-                <div class="form-sub-w3">
-                  <input type="text" name="ws_id" placeholder="Weather Station Id" required="" />
-                <div class="icon-w3">
-                  <i class="fa fa-unlock-alt" aria-hidden="true"></i>
-                </div>
-                </div>
-                 
-                <div class="clear"></div>
-                <div class="submit-agileits">
-                  <input type="submit" value="Add Plant">
-                </div>
-                <br>
-                <br>
-              </form>
+        <div style="float: left;width: 50%;padding-left: 20px ;padding-right: 20px ;padding-bottom: 20px;color:black">
+          <form action="/add/" method="post" enctype="multipart/form-data" name="Add Plant">
+            {% csrf_token %}
+            <div class="form-sub-w3">
+              <label>Add Plant</label><br>
+            </div>
+            <div class="form-sub-w3 icon-w3">
+                <input type="text" name="name" placeholder="Name " required="" />
+                <i class="fa fa-tree" aria-hidden="true"></i>
+            </div><br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="tank_id" placeholder="Tank Id" required="" />
+              <i class="fa fa-flask" aria-hidden="true"></i>
+            </div><br>  
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="ws_id" placeholder="Weather Station Id" required="" />
+              <i class="fa fa-cloud" aria-hidden="true"></i>
+            </div><br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="long" placeholder="Longitude" required="" />
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+            </div><br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="lat" placeholder="Latitude" required="" />
+              <i class="fa fa-globe" aria-hidden="true"></i>
+            </div><br>
+            <div class="clear"></div>
+            <div class="submit-agileits">
+              <input type="submit" value="Add Plant">
+            </div>
+            <br>
+            <br>
+          </form>
+        </div>
+        <div style="float: right;width: 50%;padding-left: 20px ;padding-right: 20px ;padding-bottom: 20px;color:black">
+          <form action="/addws/" method="post" enctype="multipart/form-data" name="Add Plant">
+          {% csrf_token %}
+            <div class="form-sub-w3">
+              <label>Add Weather Station</label>
+            </div>
+            <div class="form-sub-w3 icon-w3">
+                <input type="text" name="name" placeholder="Name " required="" />
+                <i class="fa fa-cloud" aria-hidden="true"></i>
+            </div>
+            <br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="long" placeholder="Longitude" required="" />
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+            </div>
+            <br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="lat" placeholder="Latitude" required="" />
+              <i class="fa fa-globe" aria-hidden="true"></i>
+            </div><br>
+            <div class="clear"></div><br>
+            <div class="submit-agileits">
+              <input type="submit" value="Add Station">
+            </div>
+            <br>
+            <br>
+          </form>
+        </div>
+        <div style="float: left;width: 40%;padding-top: 20px;color:black">
+          <form action="/addtank/" method="post" enctype="multipart/form-data" name="Add Plant">
+          {% csrf_token %}
+            <div class="form-sub-w3">
+              <label>Add Reservoir</label>
+            </div>
+            <div class="form-sub-w3 icon-w3">
+                <input type="text" name="name" placeholder="Name " required="" />
+                <i class="fa fa-tint" aria-hidden="true"></i>
+            </div>
+            <br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="long" placeholder="Longitude" required="" />
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+            </div>
+            <br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="lat" placeholder="Latitude" required="" />
+              <i class="fa fa-globe" aria-hidden="true"></i>
+            </div><br>
+            <div class="clear"></div><br>
+            <div class="submit-agileits">
+              <input type="submit" value="Add Reservoir">
+            </div>
+            <br>
+            <br>
+          </form>
+        </div>
             </div>
           </div>
         </div>
 
-        
+
 
 <!-- sensor values -->
 {% for  plants in all_plants %}
@@ -408,8 +448,8 @@ div.desc {
     </div>
       <div class="w3-container">
         <br>
-        <br> 
-                                <br> 
+        <br>
+                                <br>
                                 <div style="float: left;width: 50%;padding-left: 20px ;padding-right: 20px ;padding-bottom: 20px;">
                                         <div class="w3-card-4" style="width:100%">
                                          <p> <img src={% static 'Plants/images/temp.jpg' %} align="left" style="width:40%"> <h1 align="middle" style="color: black">{{plants.ws_key.ws_data_set.last.temp}} <sup>0</sup>C</h1></p>
@@ -426,7 +466,7 @@ div.desc {
                                           </div>
                                         </div>
                                 </div>
-                              
+
                                 <br>
                                  <div style="float: left;width: 50%;padding-left: 20px ;padding-right: 20px ;padding-top: 10px;">
                                         <div class="w3-card-4" style="width:100%">
@@ -435,7 +475,7 @@ div.desc {
                                             <p><h3 style="color: green">Rainfall</h3></p>
                                           </div>
                                         </div>
-                                 
+
                                 </div>
                                  <div style="float: left;width: 50%;padding-left: 20px ;padding-right: 20px ;padding-top: 10px;">
                                         <div class="w3-card-4" style="width:100%">
@@ -457,7 +497,7 @@ div.desc {
         <br>
         <br>
         <br>
-  
+
 
 
 <!--graphs-->
@@ -469,8 +509,8 @@ div.desc {
       <h1> Water Graph : Tank {{tanks.id}}</h1>
     </div>
     <div class="w3-container">
-      <div id="graphtank"></div>
-    </div>      
+      <div id="tanklevel{{tanks.id}}"></div>
+    </div>
   </div>
     <br>
     <br>
@@ -489,20 +529,20 @@ div.desc {
       <h1>Graphs</h1></div>
       <div class="w3-container" >
         <br>
-        <br> 
-                <br> 
+        <br>
+                <br>
                 <div style="float: left;width: 50%;padding-left: 40px ;padding-right: 0px ;padding-bottom: 20px;">
                         <div class="w3-card-4" style="width:100%;padding-left: 70px">
-                          
-                         <p><button onclick="showGraph({{temperature | getkey:plants.id | safe}}, '#temperature'); document.getElementById('temp').style.display='block'" class="w3-button w3-black"><img src={% static 'Plants/images/temp.jpg' %} align="center" style="width:100%"><h1>Temperature</h1></button> </p>
-                          <div id="temp" class ="w3-modal">
+
+                         <p><button onclick="showGraph({{temperature | getkey:plants.id | safe}}, '#temperature{{plants.id}}'); document.getElementById('temp{{plants.id}}').style.display='block'" class="w3-button w3-black"><img src={% static 'Plants/images/temp.jpg' %} align="center" style="width:100%"><h1>Temperature</h1></button> </p>
+                          <div id="temp{{plants.id}}" class ="w3-modal">
                                 <div class="w3-modal-content w3-animate-zoom">
                                   <div class="w3-container w3-black">
-                                    <span onclick="document.getElementById('temp').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+                                    <span onclick="document.getElementById('temp{{plants.id}}').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
                                     <h1>Temperature</h1>
                                   </div>
                                   <div class="w3-container">
-                                    <div id="temperature"></div>
+                                    <div id="temperature{{plants.id}}"></div>
                                   </div>
                                 </div>
                               </div>
@@ -510,16 +550,16 @@ div.desc {
                 </div>
                 <div style="float: right;width: 50%;padding-left: 40px ;padding-right: 0px ;padding-bottom: 20px;">
                       <div class="w3-card-4" style="width:100%;padding-left: 70px">
-                          
-                         <p><button onclick="showGraph({{humidity | getkey:plants.id | safe}}, '#humid'); document.getElementById('humidity').style.display='block'" class="w3-button w3-black"><img src={% static 'Plants/images/humidity.jpg' %} align="center" style="width:100%"><h1>Humidity</h1></button> </p>
-                          <div id="humidity" class ="w3-modal">
+
+                         <p><button onclick="showGraph({{humidity | getkey:plants.id | safe}}, '#humid{{plants.id}}'); document.getElementById('humidity{{plants.id}}').style.display='block'" class="w3-button w3-black"><img src={% static 'Plants/images/humidity.jpg' %} align="center" style="width:100%"><h1>Humidity</h1></button> </p>
+                          <div id="humidity{{plants.id}}" class ="w3-modal">
                                 <div class="w3-modal-content w3-animate-zoom">
                                   <div class="w3-container w3-black">
-                                    <span onclick="document.getElementById('humidity').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+                                    <span onclick="document.getElementById('humidity{{plants.id}}').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
                                     <h1>Humidity</h1>
                                   </div>
                                   <div class="w3-container">
-                                    <div id="humid"></div>
+                                    <div id="humid{{plants.id}}"></div>
                                   </div>
                                 </div>
                               </div>
@@ -529,16 +569,16 @@ div.desc {
               <div class="w3-container" >
                 <div style="float: left;width: 50%;padding-left: 20px ;padding-right: 0px ;padding-bottom: 20px;">
                         <div class="w3-card-4" style="width:100%;padding-left: 80px">
-                          
-                         <p><button onclick="showGraph({{rainfall | getkey:plants.id | safe}}, '#rain'); document.getElementById('rainfall').style.display='block'" class="w3-button w3-black"><img src={% static 'Plants/images/rainfall.jpg' %} align="center" style="width:100%"><h1>Rainfall</h1></button> </p>
-                          <div id="rainfall" class ="w3-modal">
+
+                         <p><button onclick="showGraph({{rainfall | getkey:plants.id | safe}}, '#rain{{plants.id}}'); document.getElementById('rainfall{{plants.id}}').style.display='block'" class="w3-button w3-black"><img src={% static 'Plants/images/rainfall.jpg' %} align="center" style="width:100%"><h1>Rainfall</h1></button> </p>
+                          <div id="rainfall{{plants.id}}" class ="w3-modal">
                                 <div class="w3-modal-content w3-animate-zoom">
                                   <div class="w3-container w3-black">
-                                    <span onclick="document.getElementById('rainfall').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+                                    <span onclick="document.getElementById('rainfall{{plants.id}}').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
                                     <h1>Rainfall</h1>
                                   </div>
                                   <div class="w3-container">
-                                    <div id="rain"></div>
+                                    <div id="rain{{plants.id}}"></div>
                                   </div>
                                 </div>
                               </div>
@@ -546,16 +586,16 @@ div.desc {
                 </div>
                 <div style="float: right;width: 50%;padding-left: 20px ;padding-right: 0px ;padding-bottom: 20px;">
                         <div class="w3-card-4" style="width:100%;padding-left: 80px">
-                          
-                         <p><button onclick="showGraph({{soil_moisture | getkey:plants.id | safe}}, '#moist'); document.getElementById('moisture').style.display='block'" class="w3-button w3-black"><img src={% static 'Plants/images/Soil_icon.png' %} align="center" style="width:100%"><h1>Soil Moisture</h1></button> </p>
-                          <div id="moisture" class ="w3-modal">
+
+                         <p><button onclick="showGraph({{soil_moisture | getkey:plants.id | safe}}, '#moist{{plants.id}}'); document.getElementById('moisture{{plants.id}}').style.display='block'" class="w3-button w3-black"><img src={% static 'Plants/images/Soil_icon.png' %} align="center" style="width:100%"><h1>Soil Moisture</h1></button> </p>
+                          <div id="moisture{{plants.id}}" class ="w3-modal">
                                 <div class="w3-modal-content w3-animate-zoom">
                                   <div class="w3-container w3-black">
-                                    <span onclick="document.getElementById('moisture').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+                                    <span onclick="document.getElementById('moisture{{plants.id}}').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
                                     <h1>Soil Moisture</h1>
                                   </div>
                                   <div class="w3-container">
-                                    <div id="moist"></div>
+                                    <div id="moist{{plants.id}}"></div>
                                   </div>
                                 </div>
                               </div>
@@ -594,7 +634,7 @@ div.desc {
       <h1>Maps: Plants</h1>
     </div>
     <div class="w3-container">
-      <div id="maps_plants" style="height: 500px; width: 850px"></div>
+      <div id="maps_plants" style="height: 500px; width: 800px"></div>
     </div>
   </div>
 </div>
@@ -616,13 +656,64 @@ div.desc {
       <span onclick="document.getElementById('user').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
       <h1>Profile</h1>
     </div>
-    <div class="w3-container">
-      <div id="char_div"></div>
-      <h1 style="color: yellow;">Welcome</h1>
-      <div class="fourth_div">
-            {{ user.username }}
+    <div class="w3-container"><br>
+      <div style="float: left;width: 50%;padding-left: 20px ;padding-right: 20px ;padding-bottom: 20px;color:black">
+          <form action="/update/" method="post" enctype="multipart/form-data" name="Add Plant">
+            {% csrf_token %}
+            <div class="form-sub-w3">
+              <label>Edit Profile</label><br>
+            </div>
+            <div class="form-sub-w3 icon-w3">
+                <input type="text" name="fname" placeholder="First Name "  />
+                <i class="fa fa-info" aria-hidden="true"></i>
+            </div><br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="lname" placeholder="Last Name"  />
+              <i class="fa fa-info" aria-hidden="true"></i>
+            </div><br>  
+            <div class="form-sub-w3 icon-w3">
+              <input type="password" name="password" placeholder="Password"  />
+              <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+            </div><br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="file" name="image" placeholder="Profile Image"  />
+              <label for="image"> Select a Image to upload</label>
+            </div><br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="email" placeholder="Email Id" />
+              <i class="fa fa-envelope-square" aria-hidden="true"></i>
+            </div><br> 
+            <div class="clear"></div>
+            <div class="submit-agileits">
+              <input type="submit" value="Update Profile">
+            </div>
             <br>
-             <img src="{{ user.userprofile.picture.url }}" class="w3-border w3-padding" alt="{{user.username}}"> 
+            <br>
+          </form>
+        </div>
+      <div id="char_div"></div>
+      <h2 style="color: gray;">Welcome</h2>
+      <div style="color: purple ; font-size: 15px;">
+        <span style="color: red;padding-right: 2px">
+          U look like this---->
+             <img src="{{ user.userprofile.picture.url }}" class="w3-border w3-padding" height=150px alt="{{user.username}}"/></span>
+        {% if user.first_name %}
+          <h6 style="color: red ">First Name :</h4>{{ user.first_name }}
+        {% endif %}
+        {% if user.last_name %}
+           <h6 style="color: red ">Last Name :</h4> {{user.last_name}}
+        {% endif %}
+          <h6 style="color: red ">User Name :</h4>{{user.username}}
+        {% if user.email %}
+           <h6 style="color: red ">Email Id :</h4> {{user.email}}
+        {% endif %}
+        <br>
+        <h6 style="color: green ">No of plants you Own :  {{all_plants|length}}</h4>
+        
+        <h6 style="color: blue ">No of reservoir your farms are connected with :  {{tank_all|length}}</h4>
+        
+            <br><br>
+            
           </div>
           <br><br>
     </div>
@@ -647,13 +738,13 @@ div.desc {
             </div>
           </div>
           <div class="third_div">
-          <br> 
+          <br>
             {{tanks.tank_data_set.last.water_level}} %
             <br><br>
           </div>
         </div>
       </center>
-    </div>      
+    </div>
   </div>
     <br>
     <br>
@@ -664,5 +755,44 @@ div.desc {
 </div>
 {% endfor %}
 </div>
+
+<div id="Remove" class="w3-modal" >
+  <div class="w3-modal-content w3-animate-zoom">
+    <div class="w3-container w3-black w3-display-container" >
+      <span onclick="document.getElementById('Remove').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+      <h1>Remove Items</h1>
+    </div>
+      <div class="w3-container">
+        <br>
+        <br>
+        <div style="float: left;width: 50%;padding-left: 20px ;padding-right: 20px ;padding-bottom: 20px;color:black">
+          <form action="/remove/" method="post" enctype="multipart/form-data" name="Add Plant">
+            {% csrf_token %}
+            <div class="form-sub-w3">
+              <label>Remove Items</label><br>
+            </div>
+            <div class="form-sub-w3 icon-w3">
+                <input type="text" name="name" placeholder="Plant Id "  />
+                <i class="fa fa-tree" aria-hidden="true"></i>
+            </div><br>
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="tank_id" placeholder="Tank Id" />
+              <i class="fa fa-flask" aria-hidden="true"></i>
+            </div><br>  
+            <div class="form-sub-w3 icon-w3">
+              <input type="text" name="ws_id" placeholder="Weather Station Id" />
+              <i class="fa fa-cloud" aria-hidden="true"></i>
+            </div><br>
+            <div class="clear"></div>
+            <div class="submit-agileits">
+              <input type="submit" value="Remove Plant">
+            </div>
+            <br>
+            <br>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
