@@ -8,9 +8,11 @@ This is an IOT based website which is developed by my team as part of our projec
 * [Django]( https://www.djangoproject.com/)
 * [PIL]( https://python-pillow.org/)
 
+
+
 ## Getting Started
 
-To clone and run this application, you'll need Git and Python installed on your computer. I assume you already setup the django environment on your machine, if not yet, then Google is your friend. From your command line:
+To clone and run this application, you'll need Git,Python and Pillow installed on your computer. I assume you already setup the Django environment on your machine, if not yet, then Google is your friend. From your command line:
 
 ### Clone this repository
 ```
